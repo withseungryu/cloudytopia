@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Workspace</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Full Slider - Start Bootstrap Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/full-slider.css" rel="stylesheet"><
+    <style>
+    @import url('https://fonts.googleapis.com/css?family=Do+Hyeon');
+        html, body {height: 100%; margin: 0; padding: 0;}
+        
+        body{
+             background-image: url("<%= asset_path 'mainimg.png' %>"); 
+
+          
+             background-size: 100% 100%;
+            
+        }
+        .mento{
+            color: white;
+            font-size: 25pt;
+            text-align: center;
+            margin-top: <5%></5%>;
+            font-family: 'Do Hyeon', sans-serif;
+        }
+        
+        .mament{
+            
+            
+        }
+        .first_btn, .second_btn{
+            color: #00e3fc;
+            font-size: 20pt;
+        }
+        .first_box{
+            width: 300px;
+            height: 50px;
+            border-style: none;
+            border-color: black;
+            margin-top: 8%;
+        }
+        .second_box{
+            width: 300px;
+            height: 50px;
+            border-style: none;
+            border-color: black;
+        }
+        .fullwrap{
+            text-align: center;
+        }
+        .first_box, .second_box{
+             background-color: white;
+             opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="fullwrap">
+  <div class="mento"></div><br> <br>
+    <!--<span class="mament">유똥피아</span></div><br>-->
+    <div class="sos_btn"><a href="map"><img src="https://cdn.icon-icons.com/icons2/882/PNG/512/1-10_icon-icons.com_68825.png" width="300px" height="300px"/> </a></div>
+    <div class="btn first_box"><%= link_to "로그인" , "/users/sign_in" , class: "first_btn" %></div>
+    <br><br><div class="btn second_box"><%= link_to "회원가입", "/users/sign_up", class: "second_btn" %></div>
+    <br><br><div class="btn second_box"><%= link_to "인덱스", "/home/index", class: "second_btn" %></div>
+    </div>
+   
+    
+    
+</body>
+</html>

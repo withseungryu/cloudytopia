@@ -1,0 +1,778 @@
+<div id="powerbbsHead"><table cellpadding='0' cellspacing='0' class='headerviewfile'><tr><td valign='top' style='text-align:center;padding:10 0 0 0; width:730px;' align='center'><link rel="stylesheet" type="text/css" href="http://www.inven.co.kr/common/community/lib/style/board_top_1288.css?v=110509a"/>
+<center><img src="http://static.inven.co.kr/image_2011/webzine/community/1288/board_title_1288.png" style="MARGIN: 15px 0 0"></center>
+</td></tr></table></div><div id="powerbbsBody" class="bc_red1 bt_BASIC"><TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=10 BORDER=0><TR><TD VALIGN=TOP>
+<SCRIPT LANGUAGE=javascript>
+function cmp(query, changevalue) //카테고리 변경 -> changevalue 추가 12.20
+{
+	var cateval = "&cateval=" + changevalue;
+	var f = document.forms.board_list1;
+	var i = 0;
+	var chked = 0;
+	var qval = "";
+	var qval_idx = "";
+	for (i = f.length -1 ; i >= 0; i-- ) {
+		if (f[i].type == 'checkbox') {
+			if (f[i].checked) {
+				chked++;
+				qval = qval + "&" + f[i].name + "=" + f[i].value;
+				qval_idx = qval_idx + ',' + f[i].value;
+			}
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	if (query == 'view') {
+		if( chked < 1 ) {
+			alert('조회하고자 하는 게시물을 먼저 선택해 주세요.');
+			return false;
+		}
+		window.location.href = "http://www.inven.co.kr/board/powerbbs.php?come_idx=1288&query=multi&p=1"+qval;
+	}
+}
+
+function bbs_sort(sort,orderby)
+{
+	var sort;
+	window.location.href = "http://www.inven.co.kr/board/powerbbs.php?come_idx=1288&query=list&category=&sort=" + sort +
+	"&where=&name=&subject=&content=" +
+	"&keyword=&p=1&sterm=&orderby=" + orderby;
+}
+
+function category_go() {
+	window.location = "http://www.inven.co.kr/board/powerbbs.php?come_idx=1288&query=list&sterm=&category=" + document.board_list1.catego.value;
+}
+
+function select_all() {
+	var f = document.board_list1;
+	for (var i=0; i<f.elements.length; i++) {
+		var ele=f.elements[i];
+		if (ele.name.substring(0,5)=="multi" || ele.name.substring(0,6)=="fmulti") {
+			if (ele.checked==true) {
+				ele.checked=false;
+			} else {
+				ele.checked=true;
+			}
+		}
+	}
+}
+
+function view_arti(uid) {
+	location.href = "http://www.inven.co.kr/board/powerbbs.php?come_idx=1288&query=view&p=1&my=&category=&sort=PID&orderby=&where=&name=&subject=&content=&keyword=&sterm=&iskin=&mskin=&l=" + uid;
+}
+
+function view_blind(uid) {
+	if (confirm('블라인드 처리된 게시물입니다.\n글을 보시겠습니까?')) {
+		view_arti(uid);
+	}
+}
+
+function viewBlindArticle() {
+	if (confirm('블라인드 처리된 게시물입니다.\n글을 보시겠습니까?')) {
+		try {
+			var blindObjMenu = getObj('powerbbsBodyBlindMenu');
+			blindObjMenu.style.display = 'none';
+			var blindObj = getObj('powerbbsBodyBlind');
+			var blindFixObj = getObj('powerbbsBodyBlindFix');
+			blindObj.style.display = 'inline';
+			blindObj.innerHTML = blindFixObj.value;
+			INVEN.Media.Resizer.resizeAll("imageCollectDiv");
+		} catch (e) {
+			
+		}
+	}
+}
+
+function viewDeleteArticle() {
+	if (confirm('비추천 삭제 처리된 게시물입니다.\n글을 보시겠습니까?')) {
+		try {
+			var blindObjMenu = getObj('powerbbsBodyBlindMenu');
+			blindObjMenu.style.display = 'none';
+			var blindObj = getObj('powerbbsBodyBlind');
+			var blindFixObj = getObj('powerbbsBodyBlindFix');
+			blindObj.style.display = 'inline';
+			blindObj.innerHTML = blindFixObj.value;
+			INVEN.Media.Resizer.resizeAll("imageCollectDiv");
+		} catch (e) {
+			
+		}
+	}
+}
+
+function view_blind_comment(obj) {
+	if (confirm('블라인드 처리된 코멘트입니다.\n글을 보시겠습니까?')) {
+		obj = getObj(obj);
+		var commentBody = INVEN.Html.nextObj(obj.parentNode);
+		obj.style.display = 'none';
+		commentBody.innerHTML = '<br /><br />' + commentBody.innerHTML;
+		commentBody.style.display = 'inline';
+		//commentBody.style.color = 'black';
+	}
+}
+
+
+
+
+
+function showText(articleNum) {
+
+	var x,y,realy,realx;
+	var bodyHeight = document.body.offsetHeight+document.body.scrollTop;
+	var bodyWidth = document.body.offsetWidth+document.body.scrollLeft;
+	var over = document.getElementById('overDiv'+articleNum);
+
+	over.style.visibility = 'visible';
+
+		x=event.x+document.body.scrollLeft;
+		y=event.y+document.body.scrollTop;
+		totaly = y + over.offsetHeight;
+		totalx = x + over.offsetWidth;
+
+		if(totaly > bodyHeight) {
+			realy = y - (totaly - bodyHeight);
+		} else {
+			realy = y;
+		}
+
+		if(x >500) {
+			realx = x - 460;
+		} else if(totalx > bodyWidth) {
+			realx = x - (totalx - bodyWidth);
+		} else {
+			realx = x;
+		}
+
+	over.style.left = realx;
+	over.style.top = realy;
+}
+
+
+function nd(articleNum) {
+	document.getElementById('overDiv'+articleNum).style.visibility='hidden';
+}
+
+function writeArticle() {
+						loginWrite('1288','');
+			}
+
+function viewCateChange(changevalue, comeIdx, lNum) {
+	if(changevalue) {
+		if (confirm('\n\n게시물 카테고리변경은 관리자만 가능합니다.\n\n정말로 변경 하시겠습니까?\n\n')) {
+			window.location.href = "http://www.inven.co.kr/board/bbs/include/view_catechange.php?come_idx="+ comeIdx + "&l=" + lNum + "&cateValue="+changevalue;
+		}
+	} else {
+		alert("변경될 카테고리를 선택해주세요.");
+		return false;
+	}
+
+}
+</SCRIPT><script>
+var owURL = 'http://www.inven.co.kr/board/opinionbbs.php?come_idx=1288&iskin=&l=';
+$(function() {$(".articleList table tbody tr.tr").each(function(){$(this).mouseover(function(){$(this).addClass('ov');}).mouseout(function(){$(this).removeClass('ov');});});$(".articleList table tbody tr.ls .bbsSubject span.sj_cm").each(function(){$(this).click(function(){var datacmtuid = $(this).attr("data-cmt-uid");if (datacmtuid>0) {var woURL = owURL+datacmtuid;if ($(this).hasClass('opv')) woURL = woURL + '&openview=1';window.open(woURL, '', 'left=100,top=100,width=750,height=500,resizable=yes,scrollbars=yes,toolbar=no');}});});
+});
+</script>
+<!-- List Part -->
+<div class="articleList">
+<table cellpadding='0' cellspacing='0' border='0' width='710'>
+		<tr>
+		<td width='710' valign='top'>
+			<table cellpadding='0' cellspacing='0' border='0' width='710'>
+								<tr>
+					<td class="listTopCom">
+
+
+<div id="listtop">
+	
+	
+	<div class="listBttns bttnsTop">
+						
+
+
+			
+
+			
+	
+			<ul style="float:right;margin-top: 1px; height:21px;">
+					<br><br>
+												<li>
+															<a href="/show"><IMG SRC='http://www.inven.co.kr/board/bbs/button/COMMON/v_write.gif' border='0'></a>
+												</li>
+						</ul>
+	</div>
+
+	<script type="text/javascript"  src="http://www.inven.co.kr/common/lib/js/store.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://www.inven.co.kr/board/lib/style/bbs_history.css"/>
+<script type="text/javascript"  src="http://www.inven.co.kr/board/lib/js/bbs_history.js?v=20180702"></script>
+<div id="bbsHistory" class="bbsHistory" style="margin-top: 4px;">
+		
+			<div class="middle">
+				<ul></ul>
+			</div>
+			<br><h1>자유게시판</h1><script type="text/javascript">INVEN.BoardHistory(20, 1, 1288, '자유게시판', 'webzine');</script>
+</div>
+   <style>
+* {
+margin: 0; padding: 0;
+}
+
+div ul li {
+float: left;
+list-style:none;
+margin-right:10px;
+
+}
+</style>
+
+<div id = "webzineHeadmenu">
+	<div id = "webzineHeadmenuMain" style="border: 1px solid; padding: 15px;
+        margin: 5px;">
+	    <ul class = "menu">
+			
+			<li class="game" ><a href="#">인기글</a></li>
+			<li class="schedule"><a href="https://news.naver.com/">오늘의 뉴스</a></li>
+			<li class="gamer"><a href="#">코믹</a></a></li>
+			<li class="inven"><a href="#">우리들의 경험담</a></li>
+			<li class="mobile"><a href="/pp">자유게시판</a></li>
+			<li class="esports"><a href="#">화장실 정보제공</a></a></li>
+			<li><a href = "#">사진</a></li>
+					<li><a href = "https://comic.naver.com/webtoon/weekday.nhn">웹툰</a></li>
+					<li><a href = "https://www.youtube.com/watch?v=HSAivGk6F30">영상</a></li>
+			
+		</ul>
+		<div id = "webzineHeadmenuSub">
+			<div class = "listBox">
+			</div>
+					</div>
+	</div>
+</div>
+
+<script type = "text/javascript">
+	var webzineHeadmenuObject = new WEBZINE.Layout.headmenu();
+	//webzineHeadmenuObject.setACriteria('showdelay', 0);
+	//webzineHeadmenuObject.setACriteria('hidedelay', 500);
+	//webzineHeadmenuObject.setACriteria('subindent', 10);
+	//webzineHeadmenuObject.setACriteria('type', 'layer');
+	webzineHeadmenuObject.setACriteria('type', 'fixlayout');
+	webzineHeadmenuObject.setFixMenu('news');
+	webzineHeadmenuObject.init('webzineHeadmenuMain', 'webzineHeadmenuSub');
+</script>
+<script type="text/javascript">
+	/* 변경전
+	var webzineHeadmenuForm1 = INVEN.Html.FormControl.create();
+	webzineHeadmenuForm1.setForm('webzineHeadmenuF1');
+	webzineHeadmenuForm1.addField('sw','검색어');
+	webzineHeadmenuForm1.getForm().onsubmit = function() { WEBZINE.Search.searchAll(webzineHeadmenuForm1); return false; }
+ */
+	/*통합검색 변경후*/
+    $("#webzineHeadmenuF1 input[name='sw']").keydown(function(key){
+    	if(key.keyCode == 13){	//엔터실행   
+			isearch_community();
+    		return false;
+    	}
+    });
+
+    $('#webzineHeadmenuF1 .submit').click(function(e){
+		isearch_community();
+        return false;
+    });
+
+	// 검색 
+	function isearch_community(){
+		url = 'http://www.inven.co.kr/search';
+		skin = 'webzine';
+		page = 1;
+		type = 'top';
+		isearchword = $('#webzineHeadmenuF1 input[name=sw]').val();
+ 
+		isearchword = isearchword.replace(/\\/g, "");
+		isearchword = isearchword.replace(/\"/g, "");
+		isearchword = isearchword.replace(/\'/g, "");
+		isearchword = isearchword.replace(/\`/g, "");
+		//isearchword = isearchword.replace(/ /gi, ''); 
+ 
+		if(!isearchword){
+			url = url + '/' + skin + '/' + type + '/'; 
+		}else{
+			isearchword = encodeURIComponent(isearchword);
+			url = url + '/' + skin + '/' + type + '/' + isearchword + '/' + page;
+		}
+	  
+		document.location.href=url;
+		return false;
+	}
+</script>
+
+
+<link href="https://fonts.googleapis.com/css?family=Poiret+One|Poor+Story" rel="stylesheet" >
+</td>
+				</tr>
+								<tr height='3'  class="bgc"><td></td></tr>
+				<!-- 실제 List 부분 -->
+				<tr>
+					<td><!-- 라인을 넣을땐 이곳에 컬러변수를 삽입하고 하단 테이블에서 스페이싱값 1을 추가 -->
+						<FORM action='' name=board_list1>
+						<INPUT type=hidden name=come_idx value='1288'>
+						<INPUT type=hidden name=iskin value=''>
+						<INPUT type=hidden name=mskin value=''>
+						<INPUT type=hidden name=p value='1'>
+						<INPUT type=hidden name=query value='list'>
+						<INPUT type=hidden name=my value=''>
+						<INPUT type=hidden name=category value=''>
+						<INPUT type=hidden name=sort value='PID'>
+						<INPUT type=hidden name=orderby value=''>
+						<table cellpadding='0' cellspacing='0' border='0' width='710'>
+						<thead>
+							<tr height='30' bgcolor='#f2e6e6' align='center'>
+																									<TD align='center' nowrap width="40">번호</TD>
+																				<TD nowrap>&nbsp;　　　　　　　　　　　제목　　　　　　　　　　　&nbsp;</TD>
+																									<TD nowrap width="70">글쓴이</TD>
+																								<TD nowrap width="50">등록일</TD>
+																									<TD nowrap width="60">조회</TD>
+																									<TD nowrap width="40">추천</TD>
+																									
+															</tr>
+						</thead>
+						<tbody>
+							<tr height='1'  class="bgc"><td colspan='6'></td></tr>
+								<TR  class='ls tr tr2'>
+
+<TD class='bbsNo'><p></p></TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" href="/po/" &nbsp;<p></p></A>&nbsp;&nbsp;<span class='sj_cm opv' data-cmt-uid='17717'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'></SPAN>
+</TD>
+<TD class='date'><p></p>&nbsp;</TD>
+<TD class='hit'></TD>
+<TD class='req'>0</TD>
+
+</TR><TR  class='ls tr tr1'>
+
+<TD class='bbsNo'>17716</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17716">&nbsp;NBA2K19 게임플레이 워리어스 VS 레이커스</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17716'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv32.gif' class='lv_ic'> <SPAN onclick="layerNickName('아르키매','pbNickNameHandler')" style=cursor:pointer>아르키매</SPAN>
+</TD>
+<TD class='date'>16:48&nbsp;</TD>
+<TD class='hit'>90</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr2'>
+
+<TD class='bbsNo'>17715</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17715">&nbsp;혼자 외롭게 남았네요</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17715'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv18.gif' class='lv_ic'> <SPAN onclick="layerNickName('박아무개92','pbNickNameHandler')" style=cursor:pointer>박아무개92</SPAN>
+</TD>
+<TD class='date'>16:28&nbsp;</TD>
+<TD class='hit'>132</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr1'>
+
+<TD class='bbsNo'>17713</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17713">&nbsp;검은사막 금수랑 후기</A>&nbsp;<span class='sj_cm opv' data-cmt-uid='17713'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv06.gif' class='lv_ic'> <SPAN onclick="layerNickName('혼세마왕','pbNickNameHandler')" style=cursor:pointer>혼세마왕</SPAN>
+</TD>
+<TD class='date'>06:54&nbsp;</TD>
+<TD class='hit'>319</TD>
+<TD class='req'>3</TD>
+</TR><TR  class='ls tr tr2'>
+
+<TD class='bbsNo'>17712</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17712">&nbsp;말되네요 이거 ㅋ</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17712'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv40.gif' class='lv_ic'> <SPAN onclick="layerNickName('Soulari','pbNickNameHandler')" style=cursor:pointer>Soulari</SPAN>
+</TD>
+<TD class='date'>08-22&nbsp;</TD>
+<TD class='hit'>270</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr1'>
+
+<TD class='bbsNo'>17711</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17711">&nbsp;오랜만에 맞고.. 중독성 오지네용</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17711'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv58.gif' class='lv_ic'> <SPAN onclick="layerNickName('립싱크','pbNickNameHandler')" style=cursor:pointer>립싱크</SPAN>
+</TD>
+<TD class='date'>08-22&nbsp;</TD>
+<TD class='hit'>252</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr2'>
+
+<TD class='bbsNo'>17710</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17710">&nbsp;은원서버님들.. 저 우산사고 시퍼요..</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17710'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv63.gif' class='lv_ic'> <SPAN onclick="layerNickName('년째연애중','pbNickNameHandler')" style=cursor:pointer>년째연애중</SPAN>
+</TD>
+<TD class='date'>08-22&nbsp;</TD>
+<TD class='hit'>294</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr1'>
+
+<TD class='bbsNo'>17709</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17709">&nbsp;카드전략과 액션이 결함된 2D게임 하이로드 출시..</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17709'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv04.gif' class='lv_ic'> <SPAN onclick="layerNickName('오키보이','pbNickNameHandler')" style=cursor:pointer>오키보이</SPAN>
+</TD>
+<TD class='date'>08-22&nbsp;</TD>
+<TD class='hit'>221</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr2'>
+
+<TD class='bbsNo'>17707</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17707">&nbsp;NBA 2K19 마이커리어 트레일러</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17707'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv32.gif' class='lv_ic'> <SPAN onclick="layerNickName('아르키매','pbNickNameHandler')" style=cursor:pointer>아르키매</SPAN>
+</TD>
+<TD class='date'>08-22&nbsp;</TD>
+<TD class='hit'>235</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr1'>
+
+<TD class='bbsNo'>17706</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17706">&nbsp;PK존잼 ㅋ</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17706'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv03.gif' class='lv_ic'> <SPAN onclick="layerNickName('쥬라기파크','pbNickNameHandler')" style=cursor:pointer>쥬라기파크</SPAN>
+</TD>
+<TD class='date'>08-22&nbsp;</TD>
+<TD class='hit'>317</TD>
+<TD class='req'>3</TD>
+</TR><TR  class='ls tr tr2'>
+
+<TD class='bbsNo'>17705</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17705">&nbsp;어우 던파 사람봐..</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17705'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv29.gif' class='lv_ic'> <SPAN onclick="layerNickName('직소','pbNickNameHandler')" style=cursor:pointer>직소</SPAN>
+</TD>
+<TD class='date'>08-21&nbsp;</TD>
+<TD class='hit'>450</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr1'>
+
+<TD class='bbsNo'>17703</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://upload.inven.co.kr/upload/icon/0710_8558.gif' class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17703">&nbsp;뉴맞고 0냥 올인 개웃기네 ㅋㅋㅋ</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17703'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv51.gif' class='lv_ic'> <SPAN onclick="layerNickName('뿔맛좀봐라','pbNickNameHandler')" style=cursor:pointer>뿔맛좀봐라</SPAN>
+</TD>
+<TD class='date'>08-21&nbsp;</TD>
+<TD class='hit'>289</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr2'>
+
+<TD class='bbsNo'>17702</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17702">&nbsp;헬로히어로 시작하면서 간단 후기입니다</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm' data-cmt-uid='17702'>[1]</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv02.gif' class='lv_ic'> <SPAN onclick="layerNickName('빚전의이슈','pbNickNameHandler')" style=cursor:pointer>빚전의이슈</SPAN>
+</TD>
+<TD class='date'>08-20&nbsp;</TD>
+<TD class='hit'>434</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr1'>
+
+<TD class='bbsNo'>17701</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://upload.inven.co.kr/upload/2010/03/03/icon/i23326877.jpg' class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17701">&nbsp;다이아 페스티벌 갔다왔습니다</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17701'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv70.gif' class='lv_ic'> <SPAN onclick="layerNickName('Adilisia','pbNickNameHandler')" style=cursor:pointer>Adilisia</SPAN>
+</TD>
+<TD class='date'>08-20&nbsp;</TD>
+<TD class='hit'>375</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr2'>
+
+<TD class='bbsNo'>17700</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17700">&nbsp;크루가 왜 신이라고 불리는지 알겠네요.</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm' data-cmt-uid='17700'>[1]</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv40.gif' class='lv_ic'> <SPAN onclick="layerNickName('Soulari','pbNickNameHandler')" style=cursor:pointer>Soulari</SPAN>
+</TD>
+<TD class='date'>08-20&nbsp;</TD>
+<TD class='hit'>475</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr1'>
+
+<TD class='bbsNo'>17699</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17699">&nbsp;편리함의 끝판왕 게임인듯</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm' data-cmt-uid='17699'>[3]</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv12.gif' class='lv_ic'> <SPAN onclick="layerNickName('Hansye','pbNickNameHandler')" style=cursor:pointer>Hansye</SPAN>
+</TD>
+<TD class='date'>08-20&nbsp;</TD>
+<TD class='hit'>498</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr2'>
+
+<TD class='bbsNo'>17698</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17698">&nbsp;추억소환 온라인게임 쉐도우베인</A>&nbsp;<span class='sj_cm opv' data-cmt-uid='17698'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv11.gif' class='lv_ic'> <SPAN onclick="layerNickName('가영우진','pbNickNameHandler')" style=cursor:pointer>가영우진</SPAN>
+</TD>
+<TD class='date'>08-19&nbsp;</TD>
+<TD class='hit'>533</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr1'>
+
+<TD class='bbsNo'>17697</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://upload.inven.co.kr/upload/2010/02/24/icon/i26354602.gif' class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17697">&nbsp;림 온라인 해보셨나요?</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17697'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv16.gif' class='lv_ic'> <SPAN onclick="layerNickName('깅구1','pbNickNameHandler')" style=cursor:pointer>깅구1</SPAN>
+</TD>
+<TD class='date'>08-18&nbsp;</TD>
+<TD class='hit'>631</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr2'>
+
+<TD class='bbsNo'>17696</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17696">&nbsp;으앜!! 3주년 너무 조아요!</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17696'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv63.gif' class='lv_ic'> <SPAN onclick="layerNickName('년째연애중','pbNickNameHandler')" style=cursor:pointer>년째연애중</SPAN>
+</TD>
+<TD class='date'>08-17&nbsp;</TD>
+<TD class='hit'>642</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr1'>
+
+<TD class='bbsNo'>17695</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17695">&nbsp;bj대도서관!!!그분 아세영?ㅠ예전에 즐겼는데 ..</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm' data-cmt-uid='17695'>[2]</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv02.gif' class='lv_ic'> <SPAN onclick="layerNickName('로이또이','pbNickNameHandler')" style=cursor:pointer>로이또이</SPAN>
+</TD>
+<TD class='date'>08-17&nbsp;</TD>
+<TD class='hit'>841</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr2'>
+
+<TD class='bbsNo'>17694</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17694">&nbsp;일본 코레류 게임인데 와우</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17694'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv02.gif' class='lv_ic'> <SPAN onclick="layerNickName('콘덴싱보일러','pbNickNameHandler')" style=cursor:pointer>콘덴싱보일러</SPAN>
+</TD>
+<TD class='date'>08-17&nbsp;</TD>
+<TD class='hit'>610</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr1'>
+
+<TD class='bbsNo'>17693</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://upload2.inven.co.kr/upload/2015/10/28/icon/i11428971626.jpg' class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17693">&nbsp;근접 생각해서 들긴 했는데.. 어렵네요 ㅋㅋ;;</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17693'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv66.gif' class='lv_ic'> <SPAN onclick="layerNickName('민희만쓴다','pbNickNameHandler')" style=cursor:pointer>민희만쓴다</SPAN>
+</TD>
+<TD class='date'>08-17&nbsp;</TD>
+<TD class='hit'>557</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr2'>
+
+<TD class='bbsNo'>17691</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://upload2.inven.co.kr/upload/2018/01/03/icon/i16174406557.jpg' class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17691">&nbsp;포트나이트 PC방 최적화 및 안드로이드 서비스 ..</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17691'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv40.gif' class='lv_ic'> <SPAN onclick="layerNickName('ghdtjdwn2','pbNickNameHandler')" style=cursor:pointer>ghdtjdwn2</SPAN>
+</TD>
+<TD class='date'>08-16&nbsp;</TD>
+<TD class='hit'>771</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr1'>
+
+<TD class='bbsNo'>17690</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17690">&nbsp;동양판타지RPG게임 광풍록</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm' data-cmt-uid='17690'>[2]</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv10.gif' class='lv_ic'> <SPAN onclick="layerNickName('미드노틸장인','pbNickNameHandler')" style=cursor:pointer>미드노틸장인</SPAN>
+</TD>
+<TD class='date'>08-16&nbsp;</TD>
+<TD class='hit'>1011</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr2'>
+
+<TD class='bbsNo'>17689</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17689">&nbsp;[안드로이드]용사의 전설M 오늘 출시됨</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17689'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv13.gif' class='lv_ic'> <SPAN onclick="layerNickName('진실과거짓','pbNickNameHandler')" style=cursor:pointer>진실과거짓</SPAN>
+</TD>
+<TD class='date'>08-16&nbsp;</TD>
+<TD class='hit'>607</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr1'>
+
+<TD class='bbsNo'>17688</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17688">&nbsp;오늘도 장비 대여로 시작..</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17688'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv40.gif' class='lv_ic'> <SPAN onclick="layerNickName('Soulari','pbNickNameHandler')" style=cursor:pointer>Soulari</SPAN>
+</TD>
+<TD class='date'>08-16&nbsp;</TD>
+<TD class='hit'>582</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr2'>
+
+<TD class='bbsNo'>17687</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://upload.inven.co.kr/upload/2010/03/03/icon/i23326877.jpg' class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17687">&nbsp;요새 한국인들 좀 많아진 것 같았는데</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17687'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv70.gif' class='lv_ic'> <SPAN onclick="layerNickName('Adilisia','pbNickNameHandler')" style=cursor:pointer>Adilisia</SPAN>
+</TD>
+<TD class='date'>08-16&nbsp;</TD>
+<TD class='hit'>635</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr1'>
+
+<TD class='bbsNo'>17685</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://upload2.inven.co.kr/upload/2017/02/28/icon/i13881815137.jpg' class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17685">&nbsp;던파 헬던 뺑뺑이 아니네 이제</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17685'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv47.gif' class='lv_ic'> <SPAN onclick="layerNickName('Despair4','pbNickNameHandler')" style=cursor:pointer>Despair4</SPAN>
+</TD>
+<TD class='date'>08-14&nbsp;</TD>
+<TD class='hit'>704</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr2'>
+
+<TD class='bbsNo'>17684</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17684">&nbsp;광복절 이벤트 합니당!</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17684'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv15.gif' class='lv_ic'> <SPAN onclick="layerNickName('두잉겜','pbNickNameHandler')" style=cursor:pointer>두잉겜</SPAN>
+</TD>
+<TD class='date'>08-14&nbsp;</TD>
+<TD class='hit'>684</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr1'>
+
+<TD class='bbsNo'>17682</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17682">&nbsp;던파 천공균열이 이런거였군요 ㅋㅋㅋㅋ</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm' data-cmt-uid='17682'>[1]</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv28.gif' class='lv_ic'> <SPAN onclick="layerNickName('직소','pbNickNameHandler')" style=cursor:pointer>직소</SPAN>
+</TD>
+<TD class='date'>08-13&nbsp;</TD>
+<TD class='hit'>688</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr2'>
+
+<TD class='bbsNo'>17681</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17681">&nbsp;재미있었던 3주년 특별방송!</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17681'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv62.gif' class='lv_ic'> <SPAN onclick="layerNickName('년째연애중','pbNickNameHandler')" style=cursor:pointer>년째연애중</SPAN>
+</TD>
+<TD class='date'>08-13&nbsp;</TD>
+<TD class='hit'>729</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr1'>
+
+<TD class='bbsNo'>17680</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://upload2.inven.co.kr/upload/2015/10/28/icon/i11428971626.jpg' class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17680">&nbsp;와.. 고수 만났네요.. 이런 반응속도라니 ㅋㅋ</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17680'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv66.gif' class='lv_ic'> <SPAN onclick="layerNickName('민희만쓴다','pbNickNameHandler')" style=cursor:pointer>민희만쓴다</SPAN>
+</TD>
+<TD class='date'>08-13&nbsp;</TD>
+<TD class='hit'>825</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr2'>
+
+<TD class='bbsNo'>17679</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://www.inven.co.kr/board/bbs/skin/BASIC_common/image/icon_none.gif'  class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17679">&nbsp;웹게임 하나 나오는 모양이에요.</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm' data-cmt-uid='17679'>[5]</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv40.gif' class='lv_ic'> <SPAN onclick="layerNickName('Soulari','pbNickNameHandler')" style=cursor:pointer>Soulari</SPAN>
+</TD>
+<TD class='date'>08-13&nbsp;</TD>
+<TD class='hit'>792</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr1'>
+
+<TD class='bbsNo'>17678</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://upload2.inven.co.kr/upload/2017/02/28/icon/i13881815137.jpg' class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17678">&nbsp;던파 이제 영고는 없을 듯...</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17678'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv47.gif' class='lv_ic'> <SPAN onclick="layerNickName('Despair4','pbNickNameHandler')" style=cursor:pointer>Despair4</SPAN>
+</TD>
+<TD class='date'>08-11&nbsp;</TD>
+<TD class='hit'>849</TD>
+<TD class='req'>0</TD>
+</TR><TR  class='ls tr tr2'>
+
+<TD class='bbsNo'>17677</TD><TD class="bbsSubject">&nbsp;&nbsp;&nbsp;<img src='http://upload2.inven.co.kr/upload/2018/01/03/icon/i16174406557.jpg' class='sj_ic'>&nbsp;&nbsp;<A class="sj_ln" HREF="http://www.inven.co.kr/board/webzine/1288/17677">&nbsp;오늘 무슨날인가</A>&nbsp;<img src="http://static.inven.co.kr/image_2011/board/common/img_14x12_image1a.png" border="0" class="iconimg" />&nbsp;<span class='sj_cm opv' data-cmt-uid='17677'>&nbsp;&nbsp;&nbsp;&nbsp;</span></TD>
+<TD class='bbsNick'><img src='http://static.inven.co.kr/image_2011/member/level/1202/lv40.gif' class='lv_ic'> <SPAN onclick="layerNickName('ghdtjdwn2','pbNickNameHandler')" style=cursor:pointer>ghdtjdwn2</SPAN>
+</TD>
+<TD class='date'>08-10&nbsp;</TD>
+<TD class='hit'>831</TD>
+<TD class='req'>0</TD>
+</TR>
+							<tr height='1'  class="bgc"><td colspan='6'></td></tr>
+						</tbody>
+						</table>
+						</FORM>
+					</td>
+				</tr>
+								<tr height="30" bgcolor='#f2e6e6'>
+					<td>
+									<table cellpadding='0' cellspacing='0' border='0' width='700'>
+				<tr>
+					<td align='left'>
+																																				
+						
+
+
+					</td>
+										<td align='right' style="padding-top:3px;">
+																														<a href="/show"  style='margin-right:3px;'><IMG SRC='http://www.inven.co.kr/board/bbs/button/COMMON/v_write.gif' border='0'></a>
+																										</td>
+				</tr>
+			</table>
+					</td>
+				</tr>
+				<tr height='2' bgcolor='#f2e6e6'>
+					<td align='center'>
+						<table cellpadding="0" cellspacing="0" border="0" width="690">
+							<tr height='1'  class="bgc"><td></td></tr>
+							<tr height='1'  class="bgcw"><td></td></tr>
+						</table>
+					</td>
+				</tr>
+				<tr height="30" bgcolor='#f2e6e6'>
+					<td>
+									<table cellpadding='0' cellspacing='0' border='0' width='700'>
+				<tr>
+					<td align='left' style="padding-top:3px;">
+						<FORM id=jump NAME=jump onsubmit="return false">
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR>
+<TD>
+	<TABLE CELLSPACING=0 CELLPADDING=0>
+	<tr>
+		<td><img src='http://www.inven.co.kr/board/bbs/button/COMMON/prev1.gif' BORDER=0></td><td>&nbsp;<strong style='color:red;text-decoration:underline;'>1</strong>&nbsp;</td><td>&nbsp;<A HREF=javascript:page('2');>2</A>&nbsp;<td><td>&nbsp;<A HREF=javascript:page('3');>3</A>&nbsp;<td><td>&nbsp;<A HREF=javascript:page('4');>4</A>&nbsp;<td><td>&nbsp;<A HREF=javascript:page('5');>5</A>&nbsp;<td><td>&nbsp;<A HREF=javascript:page('6');>6</A>&nbsp;<td><td>&nbsp;<A HREF=javascript:page('7');>7</A>&nbsp;<td><td>&nbsp;<A HREF=javascript:page('8');>8</A>&nbsp;<td><td>&nbsp;<A HREF=javascript:page('9');>9</A>&nbsp;<td><td>&nbsp;<A HREF=javascript:page('10');>10</A>&nbsp;<td><td><A HREF=javascript:page('11');><img src='http://www.inven.co.kr/board/bbs/button/COMMON/next2.gif' BORDER=0></A></td>	</tr>
+	</table>
+</td>
+<td width="34" style="padding-bottom:3px;">
+<!--INPUT TYPE=TEXT NAME=p VALUE='1' onkeypress="if (event.keyCode==13)javascript:page_move();"  style='width:31;height:20px;text-align:center;border:1 solid gray;padding-top:3px;'-->
+</td>
+<td width="40" style="padding-bottom:2px;_padding-bottom:0px;">
+<!--IMG SRC='./bbs/button/COMMON/jump.gif' onclick="page_move();"-->
+</TD>
+</TR>
+</TABLE>
+</FORM>
+<script language="javascript">
+function page(p) {
+	location.href = "http://www.inven.co.kr/board/webzine/1288?sort=PID&p=" + p;
+}
+function page_move() {
+	var page = parseInt(document.jump.p.value);
+	var pval = document.jump.p.value;
+	if (page > 11 || page < 1) {
+		alert("1~11페이지 사이에서 선택가능합니다.    ");
+		document.jump.p.value = 11;
+		document.jump.p.focus();
+		return true;
+	}
+
+	if ( isNaN(pval) ) {
+		alert("이동할 페이지는 숫자로만 입력해 주십시오.    ");
+		document.jump.p.value = 1;
+		document.jump.p.focus();
+		return true;
+	}
+	window.location.href = "http://www.inven.co.kr/board/webzine/1288?sort=PID&p="+page;
+}
+</script>					</td>
+					<td width='233' align='right' style="padding-top:3px;">
+																		<FORM action='http://www.inven.co.kr/board/webzine/1288' name=board_list style="margin:0;padding:0;" onsubmit="this.keyword.value=this.keyword.value.replace(/\\/ig, '');">
+							<TABLE CELLSPACING=0 CELLPADDING=0 BORDER=0 style="width:233px;">
+								<TR>
+									<TD ALIGN='right' HEIGHT=35 style="text-align:right;">
+											<select name="name" style="margin-right:3px;width:74px;">
+										<OPTION VALUE='subject' >&nbsp;제&nbsp;&nbsp;&nbsp;목</OPTION>
+										<OPTION VALUE='content' >&nbsp;내&nbsp;&nbsp;&nbsp;용</OPTION>
+																				<OPTION VALUE='nicname' >&nbsp;닉네임</OPTION>
+																				<OPTION VALUE='category' >카테고리</OPTION>
+										<OPTION VALUE='subjcont' >제목+내용</OPTION>
+											</select>
+									</TD>
+									<TD>
+										<input type="text" name="keyword" value="" style="display:inline;border:1 solid gray;color:red;width:100px;margin-right:3px;" />
+										<input type="image" src="http://www.inven.co.kr/board/bbs/button/COMMON/button_search.gif" BORDER="0" ALIGN="ABSMIDDLE" style="display:inline;" />
+									</TD>
+								</TR>
+							</TABLE>
+							<INPUT type="hidden" name="iskin" value="" />
+							<INPUT type="hidden" name="mskin" value="" />
+							<INPUT type="hidden" name="p" value="1" />
+							<INPUT type="hidden" name="query" value="list" />
+							<INPUT type="hidden" name="my" value="" />
+							<INPUT type="hidden" name="category" value="" />
+							<INPUT type="hidden" name="sort" value="PID" />
+							<INPUT type="hidden" name="orderby" value="" />
+							<INPUT type="hidden" name="sterm" value="" />
+							</FORM>
+																</td>
+				</tr>
+															</table>
+					</td>
+				</tr>
+				<tr height='3'  class="bgc"><td></td></tr>
+			</table>
+
+		</td>
+	</tr>
+</table>
+
+</div>
+</TD></TR></TABLE><div id="bbsLayer01" style="display: none; position: absolute" width=0></div></div><script type="text/javascript">
+	var bbsInvenScript =  function() {
+		if (!window.INVEN || !INVEN.customAction) {
+			var sc = document.createElement('script'),
+				loaded = false;
+			sc.setAttribute('type', 'text/javascript');
+			sc.setAttribute('src', 'http://www.inven.co.kr/common/lib/js/invenProfile.js?v=20180514a');
+			sc.onload = function() {
+				if (!loaded && (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')) {
+					try {
+						loaded = true;
+												if (document.getElementById('powerbbsHead')) { var bbsHeaderTopScript = new INVEN.customAction('powerbbsHead'); }
+																	} catch (e) {
+						//console.log(e.message);
+					} finally {
+						this.onload = null;
+						this.onreadystatechange = null;
+					}
+				}
+			};
+			sc.onreadystatechange = sc.onload;
+			document.getElementsByTagName('head')[0].appendChild(sc);
+		} else {
+						if (document.getElementById('powerbbsHead')) { var bbsHeaderTopScript = new INVEN.customAction('powerbbsHead'); }
+								}
+	};
+	if ($.browser.msie && parseFloat($.browser.version) < 10) { $(document).ready(bbsInvenScript); }
+	else { bbsInvenScript(); }
+</script>
+
+

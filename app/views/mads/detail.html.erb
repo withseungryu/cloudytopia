@@ -1,0 +1,157 @@
+<html>
+<head>
+     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+</head>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Jua');
+    .detail_table{
+        font-family: 'Jua', sans-serif;
+        margin-top: 22%;
+        text-align: center;
+        
+           }
+    table, th, td{
+        color:#013d7b;
+         border: 1px solid #00e3fc;
+    }
+    .form_wrap{
+        
+        margin-top: 5%;
+        text-align: center;
+        background-color: #00e3fc;
+        font-family: 'Jua', sans-serif;
+    }
+    .th_name{
+        font-size:20pt;
+    }
+    .detail_sub{
+        font-size:15pt;
+    }
+    
+  
+   
+</style>
+<body>
+<table class="table detail_table" style="width:100%">
+  <tr>
+    
+    <th class="th_name" colspan="2"><%=@t.name%> 화장실</th>
+    
+  </tr>
+    <tr>
+    <th>주소</th>
+    <td><%=@t.address%></td>
+  </tr>
+  
+    <tr>
+    <th>공용여부</th>
+    <td>
+     <%if @t.unisex==false%>
+     <p>남녀 화장실 분리</p>
+     <%else%>
+     <p>남녀 공용 화장실</p>
+     <%end%>
+    </td>
+  </tr>
+  <tr>
+    <th>남성용-대변기 수</th>
+    <td>
+     <%if @t.maleflusher==false%>
+     <p>없음</p>
+     <%else%>
+     <%=@t.maleflusher%>
+     <%end%>
+    </td>
+  </tr>
+  <tr>
+    <th>남성용-소변기 수</th>
+    <td>
+     <%if @t.maleurinal==false%>
+     <p>없음</p>
+     <%else%>
+     <%=@t.maleurinal%>
+     <%end%>
+    </td>
+  </tr>
+  <tr>
+    <th>남성-장애인용 여부</th>
+    <td>
+     <%if @t.malehandicap==false%>
+     <p>없음</p>
+     <%else%>
+     <p>있음</p>
+     <%end%>
+    </td>
+  </tr>
+  <tr>
+    <th>남성-어린이용 여부</th>
+    <td>
+     <%if @t.malechild==false%>
+     <p>없음</p>
+     <%else%>
+     <p>있음</p>
+     <%end%>
+    </td>
+  </tr>
+  <tr>
+    <th>여성용-대변기 수</th>
+    <td>
+     <%if @t.femaleflusher==false%>
+     <p>없음</p>
+     <%else%>
+     <%=@t.femaleflusher%>
+     <%end%>
+    </td>
+  </tr>
+  <tr>
+    <th>여성-장애인용 여부</th>
+    <td>
+     <%if @t.femalehandicap==false%>
+     <p>없음</p>
+     <%else%>
+     <p>있음</p>
+     <%end%>
+    </td>
+  </tr>
+  <tr>
+    <th>여성-어린이용 여부</th>
+    <td>
+     <%if @t.femalechild==false%>
+     <p>없음</p>
+     <%else%>
+     <p>있음</p>
+     <%end%>
+    </td>
+  </tr>
+  <tr>
+    <%if @t.manager %>
+    <th>전화번호</th>
+    <td><%=@t.phonenum%></td>
+    <%else%>
+    <p>없음</p>
+    <%end%>
+  </tr>
+  <tr>
+    <th>개방시간</th>
+    <td><%=@t.time%></td>
+  </tr>
+  
+  
+  
+</table>
+<div class="form_wrap">
+<form action="/mads/new">
+  <input type="hidden" value= "<%=@t.id%>" name="input_id" ></input>
+  <input class="detail_sub" type="submit" value="평가하기"/></form>
+   </form>
+<form action="/mads/index_part">
+    <input type="hidden" value= "<%=@t.id%>" name="input_id2" ></input>
+  <a href="/mads/index_part"><input class="detail_sub2" type="submit" value="#"/>
+</a></form> 
+  
+</div>
+
+
+</body>
+</html>

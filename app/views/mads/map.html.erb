@@ -1,0 +1,177 @@
+<style>
+    .eval1{
+        color:gray;
+    }
+    .main_map{
+        text-align: center;
+        margin-left: 5%;
+        border-radius: 25px;
+    }
+    
+    .map_body{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%), url('/first.png') ;
+        background-repeat: no-repeat;
+        background-size: contain;
+        z-index: -2;
+    }
+
+
+</style>
+
+<div class="map_body">
+<br>
+<br>
+
+<div class="main_map" id="map" style="width:90%;height:520px;margin-top:10%;"></div>
+
+</div>
+
+
+
+<!--자바스크립트 파트-->
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=9mGll1qNz9RDrtqOjNoW&callback=initMap"></script>
+
+<script type="text/javascript">
+    var map = null;
+    
+    function initMap() {
+        var location = []
+        map = new naver.maps.Map('map', {
+            center: new naver.maps.LatLng(37.592872, 127.024892), // 시작 좌표
+            zoom: 10
+        });
+        
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            var latitude = pos.coords.latitude;
+            var longitude = pos.coords.longitude;
+            map.setCenter(new naver.maps.LatLng(latitude, longitude));
+        });
+
+
+        var toilets = <%= raw @toilets.to_json %>; 
+
+        var bounds = map.getBounds(),
+            southWest = bounds.getSW(),
+            northEast = bounds.getNE(),
+            lngSpan = northEast.lng() - southWest.lng(),
+            latSpan = northEast.lat() - southWest.lat();
+        
+        var markers = [],
+            infoWindows = [];
+        
+        for (var id=0; id < toilets.length; id++) {
+            var record = toilets[id];
+            var position = new naver.maps.LatLng(
+                record.lat,
+                record.lng);
+        
+            var marker = new naver.maps.Marker({
+                map: map,
+                position: position,
+                title:  record.name,
+                zIndex: 100
+            });
+            
+            var midstrings=[];
+            var head_contentString = [
+                '<div class="iw_inner" style="font-size: 10pt;">',
+                '   <a href="http://map.daum.net/link/to/'+record.name+','+record.lat+','+record.lng+'"><h4>'+record.name+'</h4></a>'+'',
+                '   <p style="margin-bottom:5pt;"><strong>남성</strong> <br> 대변기  : '+record.maleflusher+'<br> 소변기 : '+record.maleurinal+' ',
+                '   </p>',
+                '   <p style="margin-bottom:5pt;"><strong>여성</strong> <br> 대변기 : '+record.femaleflusher+' ',
+                '   </p>',
+                '   <p>'
+                ].join('');
+            if (record.unisex){
+                midstrings.push('   <img src="unisex.png" width="35" height="35" alt="" class="thumb" />');
+            }
+            if (record.malehandicap || record.femalehandicap){
+                midstrings.push('   <img src="handicap.png" width="35" height="35" alt="" class="thumb" />');
+            }
+            if (record.malechild || record.femalechild){
+                midstrings.push('   <img src="child.png" width="35" height="35" alt="" class="thumb" />',);
+            }
+            var middle_string = midstrings.join('');
+            var tail_contentString=[
+                '   </p>',
+                '<form action="detail"><input type="hidden" value='+record.id+'  name="input_id" ></input>',
+                ' <a href="detail"><input type="submit" value="들여다보기"/></a></form>',
+                '</div>'
+            ].join('');
+            var contentString = head_contentString + middle_string + tail_contentString;
+            var infoWindow = new naver.maps.InfoWindow({
+                content: contentString,
+                maxWidth: 120,
+                backgroundColor: "#eee",
+                borderColor: "#0572cd",
+                borderWidth: 5,
+                anchorSize: new naver.maps.Size(30, 30),
+                anchorSkew: true,
+                anchorColor: "#eee",
+                pixelOffset: new naver.maps.Point(20, -20)
+            });
+        
+            markers.push(marker);
+            infoWindows.push(infoWindow);
+        };
+        
+        naver.maps.Event.addListener(map, 'idle', function() {
+            updateMarkers(map, markers);
+        });
+        
+        function updateMarkers(map, markers) {
+        
+            var mapBounds = map.getBounds();
+            var marker, position;
+        
+            for (var i = 0; i < markers.length; i++) {
+        
+                marker = markers[i]
+                position = marker.getPosition();
+        
+                if (mapBounds.hasLatLng(position)) {
+                    showMarker(map, marker);
+                } else {
+                    hideMarker(map, marker);
+                }
+            }
+        }
+        
+        function showMarker(map, marker) {
+        
+            if (marker.getMap()) return;
+            marker.setMap(map);
+        }
+        
+        function hideMarker(map, marker) {
+        
+            if (!marker.getMap()) return;
+            marker.setMap(null);
+        }
+        // 해당 마커의 인덱스를 seq라는 클로저 변수로 저장하는 이벤트 핸들러를 반환합니다.
+        function getClickHandler(seq) {
+            return function(e) {
+                var marker = markers[seq],
+                    infoWindow = infoWindows[seq];
+        
+                if (infoWindow.getMap()) {
+                    infoWindow.close();
+                } else {
+                    infoWindow.open(map, marker);
+                }
+            }
+        }
+
+        for (var i=0, ii=markers.length; i<ii; i++) {
+            naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i));
+        }
+        
+    }
+//   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,,지도>>>>>>>>>>>>>>>>>>>
+
+</script>
+
+<!--<div class="eval1" style="margin: 0 0;"><%#= link_to '평가 하러가기', new_mad_path , class:"eval1 btn btn-primary" %></div>-->

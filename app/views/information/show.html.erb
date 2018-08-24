@@ -1,0 +1,97 @@
+
+<body>
+    <br><br><br>
+        
+        <div class="container" style="margin-left:180px;">
+
+		 <div class="row">
+
+		 	<form method="post" action="writeAction.jsp">
+<br>
+			 	<table class="table table-striped" style="width:600px;height:550px;text-align:center; border:1px; solid #dddddd">
+
+			 		<thead>
+
+						<tr>
+
+							<th colspan="1" style="background-color:#eeeeee; text-align: center;">	<select name="name" style="margin-right:3px;width:250px;height:20px;">
+										<OPTION VALUE='subject' >오늘의 뉴스</OPTION>
+										<OPTION VALUE='content' >&nbsp;코&nbsp;&nbsp;&nbsp;믹</OPTION>
+																				<OPTION VALUE='nicname' >우리들의 경험담</OPTION></OPTION>
+																				<OPTION VALUE='category' >자유게시판</OPTION>
+										<OPTION VALUE='subjcont' >화장실 정보제공</OPTION>
+										<OPTION VALUE='subjcont' >&nbsp;사&nbsp;&nbsp;&nbsp;진</OPTION>
+										<OPTION VALUE='subjcont' >&nbsp;웹&nbsp;&nbsp;&nbsp;툰</OPTION>
+										<OPTION VALUE='subjcont' >&nbsp;영&nbsp;&nbsp;&nbsp;상</OPTION>
+											</select></th>
+
+						</tr>		 		
+
+			 		</thead>
+
+			 		
+
+			 		<tbody>
+
+			 			<tr>
+			 				<td><input type="text" class="form-control" placeholder="글제목" name="bbsTitle" maxlength="50"></td>
+
+			 			</tr>
+<tr>
+                            
+			 				<td><a onclick="photoUploaderPopup('18930228');clickcr(this, 'wrt.photo', '', '', event);return false;" class="ico_pic" href="#" style="float:left;margin:15px;"><strong>파일첨부</strong></a>
+			 				<a onclick="photoUploaderPopup('18930228');clickcr(this, 'wrt.photo', '', '', event);return false;" class="ico_pic" href="#" style="float:left;margin:15px;"><input style="width:300px;"maxlength="50px;"></input></a>
+			 				</td>
+
+			 			</tr>
+			 			<tr>	
+
+			 				<td><textarea class="form-control" placeholder="글 내용" name="bbsContent" maxlength="2048" style="height:350px"></textarea> </td>
+
+			 			</tr>	
+
+			 		</tbody>
+
+			 	</table>
+
+				 	<input  style="float:right;" type="submit" class="btn btn-primary pull-right" value="글쓰기">&nbsp;
+ 	<a href="/pp"><input style="float:right;" type="submit" class="btn btn-primary pull-right" value="목록으로"></a>
+			</form>
+
+		 </div>
+
+	</div>
+        
+        
+<!-- <table class="table table-bordered" style="">-->
+<!--    <thead>-->
+     
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--        <br><br>-->
+<!--        <form action="write_ok.jsp" method="post" encType="multiplart/form-data">-->
+<!--            <tr>-->
+<!--                <th>제목: </th>-->
+<!--                <td><input type="text" placeholder="제목을 입력하세요. " name="subject" class="form-control"/></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <th>내용: </th>-->
+<!--                <td><textarea cols="10" placeholder="내용을 입력하세요. " name="content" class="form-control"></textarea></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <th>첨부파일: </th>-->
+<!--                <td><input type="text" placeholder="파일을 선택하세요. " name="filename" class="form-control"/></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td colspan="2">-->
+<!--                    <input type="button" value="등록" onclick="sendData()" class="pull-right"/>-->
+<!--                    <input type="button" value="목록으로 " class="pull-right" onclick="javascript:location.href='list.jsp'"/>-->
+                    <!-- <a class="btn btn-default" onclick="sendData()"> 등록 </a>
+<!--                    <a class="btn btn-default" type="reset"> reset </a>-->
+<!--                    <a class="btn btn-default" onclick="javascript:location.href='list.jsp'">글 목록으로...</a> -->-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--        </form>-->
+<!--    </tbody>-->
+<!--</table>-->
+</body>

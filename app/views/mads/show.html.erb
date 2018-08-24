@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Workspace</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+  <script type="text/javascript" src="/assets/jquery.raty.js"></script>
+
+\
+</head>
+<style>
+ .ma_show{
+   display: flex;
+   flex-direction: column;
+   text-align: center;
+ }
+ .btnlist{
+  color: gray;
+ }
+</style>
+<style>
+ .show_title{
+  font-weight: bold;
+  font-size: 20pt;
+ }
+</style>
+<body>
+<h1>Maps#show</h1>
+<br>
+
+
+<div class="ma_show">
+ <span class="show_title"><%= @maps.title%></span><br>
+ <!--<%#= @maps.score %><br>-->
+ 청결<div class="star-rate1" data-score=<%=@maps.score1%>></div><br>
+ 시설<div class="star-rate2" data-score=<%=@maps.score2%>></div><br>
+ 안전<div class="star-rate3" data-score=<%=@maps.score3%>></div><br>
+ <%= @maps.ment %><br>
+ <br>
+<div class="btnlist">
+ <%= link_to '수정' , edit_mad_path(@maps) , class:"btnlist btn btn-dark" %>
+ <%= link_to 'BACK' , mads_path , class:"btnlist btn btn-dark"%>
+</div> </div>
+<!--<img src="/assets/star-on.png"/>-->
+</body>
+</html>
+
+<script>
+
+   $('.star-rate1').raty({
+    path: '/assets/',
+    readOnly: true,
+    score: function() {
+           return $(this).attr('data-score');
+    }
+   });
+   $('.star-rate2').raty({
+    path: '/assets/',
+    readOnly: true,
+    score: function() {
+           return $(this).attr('data-score');
+    }
+   });
+   $('.star-rate3').raty({
+    path: '/assets/',
+    readOnly: true,
+    score: function() {
+           return $(this).attr('data-score');
+    }
+   });
+</script>

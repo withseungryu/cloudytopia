@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  score1: MyString
+  score2: MyString
+  score3: MyString
+  score_avg: MyString
+  ment: MyText
+  toilet: one
+
+two:
+  title: MyString
+  score1: MyString
+  score2: MyString
+  score3: MyString
+  score_avg: MyString
+  ment: MyText
+  toilet: two

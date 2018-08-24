@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+ <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+ 
+    <title>Full Slider - Start Bootstrap Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/full-slider.css" rel="stylesheet">
+
+  </head> 
+  <style>
+    .maper{
+      color:white;
+    }
+  </style>
+
+  <body>
+  <link href="https://fonts.googleapis.com/css?family=Poiret+One|Poor+Story" rel="stylesheet" >
+    
+
+    <header>
+      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+          <!-- Slide One - Set the background image for this slide in the line below -->
+          <div class="carousel-item active" style="background-image: url('/assets/first.png')">
+            <div class="carousel-caption">
+              <!--<div class="maper">첫번째 기능</div>-->
+              <%= link_to '1', '/map', class: "maper" %>
+              <h3>지도로 찾는 공중화장실!</h3>
+             
+            </div>
+          </div>
+          <!-- Slide Two - Set the background image for this slide in the line below -->
+          <div class="carousel-item" style="background-image: url('/assets/second.jpg')">
+            <div class="carousel-caption">
+               <%= link_to '2', '#', class: "maper" %>
+              <h3>지하철 화장실을 한눈에!</h3>
+              
+            </div>
+          </div>
+          <!-- Slide Three - Set the background image for this slide in the line below -->
+          <div class="carousel-item" style="background-image: url('/assets/third.png')">
+            <div class="carousel-caption">
+              <!--<div class="carousel-caption d-none d-md-block">-->
+             <%= link_to '3', '/ifm', class: "maper" %>             
+              <h3>화장실 정보똥!</h3>
+              
+            </div>
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <section class="py-5">
+      <div class="container block-center" style="text-align: center;">
+        <h3> 우리의 동료가 되어줘!</h3>
+        <button type="button" class="btn btn-outline-primary" >
+          <p class="write">로그인!</p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-2 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/jquery/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>

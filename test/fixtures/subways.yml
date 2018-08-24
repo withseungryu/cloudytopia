@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  station: MyString
+  tonum: MyString
+  gate_inner: MyString
+  gate_outer: MyString
+  toi_info: MyString
+  exper: MyString
+
+two:
+  station: MyString
+  tonum: MyString
+  gate_inner: MyString
+  gate_outer: MyString
+  toi_info: MyString
+  exper: MyString
